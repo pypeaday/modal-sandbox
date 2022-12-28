@@ -7,8 +7,13 @@
 
 **Table of Contents**
 
+- [Purpose](#purpose)
 - [Installation](#installation)
 - [License](#license)
+
+## Purpose
+
+This repo is for me to work through examples from [Modal Labs](https://www.modal.com)
 
 ## Installation
 
