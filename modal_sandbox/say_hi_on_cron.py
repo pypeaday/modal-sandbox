@@ -42,6 +42,7 @@ def print_info():
     url = get_url(package)
     read_api_data(url, package)
 
+    # BASE_VERSION wasn't found even though using my base iamge...
     print(f"BASE_VERSION = {os.environ.get('BASE_VERSION')}")
 
 
