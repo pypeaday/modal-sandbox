@@ -25,7 +25,7 @@ if stub.is_inside():
     cache = dc.Cache(CACHE_DIR)
 
 
-@stub.function(shared_volumes={CACHE_DIR: volume})
+@stub.function(image=my_image, shared_volumes={CACHE_DIR: volume})
 def get_author(key: str):
     if TYPE_CHECKING:
         import diskcache as dc
