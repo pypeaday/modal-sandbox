@@ -4,7 +4,12 @@ import re
 import sys
 import urllib.request
 
+import modal
 
+stub = modal.Stub(name="link-scraper")
+
+
+@stub.function
 def get_links(url):
     response = urllib.request.urlopen(url)
     html = response.read().decode("utf8")
@@ -16,5 +21,10 @@ def get_links(url):
 
 if __name__ == "__main__":
     # links = get_links.call(sys.argv[1])  # this is an issue with modal.com/docs/guide/web-scraper example
-    links = get_links(sys.argv[1])
-    print(links)
+    # also function will not run unless it's behind stub.run()
+    # links = get_links(sys.argv[1])
+    # print(links)
+
+    with stub.run():
+        links = get_links.call(sys.argv[1])
+        print(links)
