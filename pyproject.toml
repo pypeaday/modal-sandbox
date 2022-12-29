@@ -23,7 +23,7 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = []
+dependencies = ["modal-client"]
 dynamic = ["version"]
 
 [project.urls]
@@ -36,8 +36,11 @@ path = "modal_sandbox/__about__.py"
 
 [tool.hatch.envs.default]
 dependencies = [
+  "diskcache",
+  "pandas",
   "pytest",
   "pytest-cov",
+  "requests"
 ]
 [tool.hatch.envs.default.scripts]
 cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=modal_sandbox --cov=tests {args}"
