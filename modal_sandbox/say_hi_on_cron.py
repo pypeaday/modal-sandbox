@@ -12,4 +12,4 @@ def say_hi():
 
 
 if __name__ == "__main__":
-    say_hi()
+    stub.deploy("say_hi")
