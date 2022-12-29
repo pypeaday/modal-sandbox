@@ -5,6 +5,10 @@
 
 -----
 
+
+My notes are found at my blog [here](https://pype.dev/modal-labs/)
+
+
 **Table of Contents**
 
 - [Purpose](#purpose)
