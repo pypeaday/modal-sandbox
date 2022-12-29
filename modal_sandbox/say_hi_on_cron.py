@@ -6,11 +6,11 @@ from typing import TYPE_CHECKING
 
 stub = modal.Stub()
 
+TAG = "pypeaday/base-images:python-hello-world-main-3796875126-68"
+
 # my_image = modal.Image.debian_slim().pip_install(["pandas", "requests"])
 
-my_image = modal.Image.from_dockerhub(
-    tag="pypeaday/base-images:python-hello-world-main-3796875126-68"
-).pip_install(["pandas", "requests"])
+my_image = modal.Image.from_dockerhub(tag=TAG).pip_install(["pandas", "requests"])
 
 another_image = modal.Image.debian_slim().pip_install("diskcache")
 
@@ -74,7 +74,7 @@ def print_info():
     read_api_data(url, package)
 
     # BASE_VERSION wasn't found even though using my base iamge...
-    print(f"BASE_VERSION = {os.environ.get('BASE_VERSION')}")
+    print(f"BASE_VERSION = {os.environ.get('BASE_VERSION')} \n Expected: {TAG}")
 
 
 @stub.function(
@@ -89,5 +89,3 @@ def say_hi():
 
 if __name__ == "__main__":
     stub.deploy("say_hi")
-
-    stub.deploy("print_info")
