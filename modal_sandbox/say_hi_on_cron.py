@@ -24,22 +24,6 @@ if stub.is_inside():
     cache = dc.Cache(CACHE_DIR)
 
 
-@stub.function(shared_volumes={CACHE_DIR: volume})
-def get_author(key: str):
-    cached = cache.get(key)
-
-    if cached is not None:
-        print("Author was cached!")
-        return cached
-
-    # populate_value
-    # obvously this is not expensive, just working my way through the system
-    d = read_api_data(get_url(key), key)
-    author = d["info"]["author"]
-    cache.set(key, author)
-    return author
-
-
 def get_url(package: str) -> str:
     return f"https://pypi.org/pypi/{package}/json"
 
@@ -64,10 +48,25 @@ def read_api_data(url, package: str):
         return {"info": {"author": "Rodney"}}
 
 
+@stub.function(shared_volumes={CACHE_DIR: volume})
+def get_author(key: str):
+    cached = cache.get(key)
+
+    if cached is not None:
+        print("Author was cached!")
+        return cached
+
+    # populate_value
+    # obvously this is not expensive, just working my way through the system
+    d = read_api_data(get_url(key), key)
+    author = d["info"]["author"]
+    cache.set(key, author)
+    return author
+
+
 @stub.function(
     image=my_image,
     schedule=modal.Period(minutes=59),
-    shared_volumes={CACHE_DIR: volume},
 )
 def print_info():
     package = "pandas"
