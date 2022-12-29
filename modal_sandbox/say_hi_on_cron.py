@@ -33,7 +33,7 @@ def read_api_data(url, package: str):
 
 @stub.function(
     image=my_image,
-    schedule=modal.Period(minutes=1),
+    schedule=modal.Period(minutes=59),
 )
 def print_info():
     package = "pandas"
@@ -43,7 +43,7 @@ def print_info():
 
 
 @stub.function(
-    schedule=modal.Period(minutes=1), secret=modal.Secret.from_name("my-dummy-secret")
+    schedule=modal.Period(minutes=59), secret=modal.Secret.from_name("my-dummy-secret")
 )
 def say_hi():
     now = time.ctime()
