@@ -10,9 +10,9 @@ TAG = "pypeaday/base-images:python-hello-world-main-3796875126-68"
 
 # my_image = modal.Image.debian_slim().pip_install(["pandas", "requests"])
 
-my_image = modal.Image.from_dockerhub(tag=TAG).pip_install(["pandas", "requests"])
-
-another_image = modal.Image.debian_slim().pip_install("diskcache")
+my_image = modal.Image.from_dockerhub(tag=TAG).pip_install(
+    ["pandas", "requests", "diskcache"]
+)
 
 volume = modal.SharedVolume().persist("diskcache-vol")
 
