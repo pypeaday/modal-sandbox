@@ -7,16 +7,14 @@ stub = modal.Stub()
 my_image = modal.Image.debian_slim().pip_install(["pandas", "requests"])
 
 
-if stub.is_inside():
-    import pandas as pd
-    import requests
-
-
 def get_url(package: str) -> str:
     return f"https://pypi.org/pypi/{package}/json"
 
 
 def read_api_data(url, package: str):
+    import pandas as pd
+    import requests
+
     print(f"Pandas version in container: {pd.__version__}")
     # Make a request to the API
     response = requests.get(url)
