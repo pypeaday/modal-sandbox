@@ -2,7 +2,6 @@ import modal
 import os
 import time
 
-from typing import TYPE_CHECKING
 
 stub = modal.Stub()
 
@@ -27,10 +26,6 @@ if stub.is_inside():
 
 @stub.function(shared_volumes={CACHE_DIR: volume})
 def get_author(key: str):
-    if TYPE_CHECKING:
-        import diskcache as dc
-
-        cache: dc.Cache
     cached = cache.get(key)
 
     if cached is not None:
