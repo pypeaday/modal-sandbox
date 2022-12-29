@@ -4,8 +4,11 @@ import time
 
 stub = modal.Stub()
 
-my_image = modal.Image.debian_slim().pip_install(["pandas", "requests"])
+# my_image = modal.Image.debian_slim().pip_install(["pandas", "requests"])
 
+my_image = modal.Image.from_dockerhub(
+    tag="pypeaday/base-images:python-hello-world-main-3796875126-68"
+).pip_install(["pandas", "requests"])
 
 def get_url(package: str) -> str:
     return f"https://pypi.org/pypi/{package}/json"
