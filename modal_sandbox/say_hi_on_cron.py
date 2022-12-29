@@ -2,6 +2,8 @@ import modal
 import os
 import time
 
+from typing import TYPE_CHECKING
+
 stub = modal.Stub()
 
 # my_image = modal.Image.debian_slim().pip_install(["pandas", "requests"])
@@ -9,6 +11,35 @@ stub = modal.Stub()
 my_image = modal.Image.from_dockerhub(
     tag="pypeaday/base-images:python-hello-world-main-3796875126-68"
 ).pip_install(["pandas", "requests"])
+
+another_image = modal.Image.debian_slim().pip_install("diskcache")
+
+volume = modal.SharedVolume().persist("diskcache-vol")
+
+CACHE_DIR = "/cache"
+
+
+if stub.is_inside():
+    import diskcache as dc
+
+    cache = dc.Cache(CACHE_DIR)
+
+
+@stub.function(shared_volumes={CACHE_DIR: volume})
+def expensive_computation(key: str):
+    if TYPE_CHECKING:
+        import diskcache as dc
+
+        cache: dc.Cache
+    cached = cache.get(key)
+
+    if cached is not None:
+        return cached
+
+    # populate_value
+    # obvously this is not expensive, just working my way through the system
+    cache.set(key, time.ctime())
+
 
 def get_url(package: str) -> str:
     return f"https://pypi.org/pypi/{package}/json"
