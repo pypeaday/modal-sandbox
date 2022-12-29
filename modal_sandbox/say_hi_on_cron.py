@@ -42,6 +42,8 @@ def print_info():
     url = get_url(package)
     read_api_data(url, package)
 
+    print(f"BASE_VERSION = {os.environ.get('BASE_VERSION')}")
+
 
 @stub.function(
     schedule=modal.Period(minutes=59), secret=modal.Secret.from_name("my-dummy-secret")
