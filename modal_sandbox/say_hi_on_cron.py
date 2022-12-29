@@ -26,7 +26,7 @@ if stub.is_inside():
 
 
 @stub.function(shared_volumes={CACHE_DIR: volume})
-def expensive_computation(key: str):
+def get_author(key: str):
     if TYPE_CHECKING:
         import diskcache as dc
 
@@ -34,11 +34,15 @@ def expensive_computation(key: str):
     cached = cache.get(key)
 
     if cached is not None:
+        print("Author was cached!")
         return cached
 
     # populate_value
     # obvously this is not expensive, just working my way through the system
-    cache.set(key, time.ctime())
+    d = read_api_data(get_url(key), key)
+    author = d["info"]["author"]
+    cache.set(key, author)
+    return author
 
 
 def get_url(package: str) -> str:
@@ -59,8 +63,10 @@ def read_api_data(url, package: str):
         data = response.json()
 
         print(f"Author of {package} is {data['info']['author']}")
+        return {"info": {"author": f"{data['info']['author']}"}}
     else:
         print(f"Got back {response.status_code}")
+        return {"info": {"author": "Rodney"}}
 
 
 @stub.function(
@@ -69,9 +75,8 @@ def read_api_data(url, package: str):
 )
 def print_info():
     package = "pandas"
-    # return PyPi API URL
-    url = get_url(package)
-    read_api_data(url, package)
+
+    _ = get_author(key=package)
 
     # BASE_VERSION wasn't found even though using my base iamge...
     print(f"BASE_VERSION = {os.environ.get('BASE_VERSION')} \n Expected: {TAG}")
