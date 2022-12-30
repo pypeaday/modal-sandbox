@@ -1,7 +1,7 @@
-import modal
 import os
 import time
 
+import modal
 
 stub = modal.Stub()
 
@@ -33,12 +33,9 @@ def read_api_data(url, package: str):
     import requests
 
     print(f"Pandas version in container: {pd.__version__}")
-    # Make a request to the API
     response = requests.get(url)
 
-    # Check for successful response
     if response.status_code == 200:
-        # Convert the response to JSON format
         data = response.json()
 
         print(f"Author of {package} is {data['info']['author']}")
